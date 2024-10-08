@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Números Aleatorios</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .container { max-width: 400px; margin: auto; padding: 20px; }
+        input { width: 100%; padding: 10px; margin: 10px 0; }
+        button { padding: 10px; }
+        ul { list-style-type: none; padding: 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Generador de Números Aleatorios</h1>
+        <input type="text" id="nameInput" placeholder="Ingresa tu nombre" />
+        <button onclick="generateNumber()">Generar Número</button>
+        <ul id="resultList"></ul>
+    </div>
+
+    <script>
+        const results = {};
+
+        function generateNumber() {
+            const name = document.getElementById('nameInput').value;
+            if (!name) {
+                alert('Por favor, ingresa un nombre.');
+                return;
+            }
+
+            // Generar un número aleatorio único
+            let randomNumber;
+            do {
+                randomNumber = Math.floor(Math.random() * 10000); // Cambia el rango según sea necesario
+            } while (results[randomNumber]);
+
+            results[randomNumber] = name;
+
+            // Mostrar resultados
+            displayResults();
+        }
+
+        function displayResults() {
+            const resultList = document.getElementById('resultList');
+            resultList.innerHTML = ''; // Limpiar la lista antes de mostrar
+            for (const [number, name] of Object.entries(results)) {
+                const listItem = document.createElement('li');
+                listItem.textContent = `${name}: ${number}`;
+                resultList.appendChild(listItem);
+            }
+        }
+    </script>
+</body>
+</html>
